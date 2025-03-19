@@ -26,57 +26,76 @@ Things you may want to cover:
 
 ## users テーブル
 
-| Column             | Type   | Options                |
-| ------------------ | ------ | -----------------------|
-| nickname           | string | NOT NULL               |
-| email              | string | NOT NULL , ユニーク制約 |
-| password           | string | NOT NULL               |
-| first_name         | string | NOT NULL               |
-| last_name          | string | NOT NULL               |
-| first_name_kana    | string | NOT NULL               |
-| last_name_kana     | string | NOT NULL               |
-| birth_date         | date   | NOT NULL               |
+| Column             | Type   | Options                   |
+| ------------------ | ------ | --------------------------|
+| nickname           | string | null: false               |
+| email              | string | null: false, unique: true |
+| encrypted_password | string | null: false               |
+| first_name         | string | null: false               |
+| last_name          | string | null: false               |
+| first_name_kana    | string | null: false               |
+| last_name_kana     | string | null: false               |
+| birth_date         | date   | null: false               |
+
+has_many :items
+has_many :purchases
+has_many :comments
+
 
 
 ## items テーブル
 
-| Column        | Type       | Options              |
-| ------------- | ---------- | -------------------- |
-| image	        | string     | NOT NULL             |
-| user_id       | references | NOT NULL , 外部キー   |
-| name          | string     | NOT NULL             |
-| category      | string     | NOT NULL             |
-| condition     | string     | NOT NULL             |
-| shipping_fee  | string     | NOT NULL             |
-| shipping_area | string     | NOT NULL             |
-| shipping_days | integer    | NOT NULL             |
-| price         | integer    | NOT NULL             |
+| Column           | Type       | Options                          |
+| ---------------- | ---------- | -------------------------------- |
+| users            | references | null: false, foreign_key: true   |
+| name             | string     | null: false                      |
+| description      | text       | null: false                      |
+| category_id      | integer    | null: false                      |
+| condition_id     | integer    | null: false                      |
+| shipping_fee_id  | integer    | null: false                      |
+| shipping_area_id | integer    | null: false                      |
+| shipping_days    | integer    | null: false                      |
+| price            | integer    | null: false                      |
+
+belongs_to :user
+has_one :purchase
+has_many :comments
 
 
 ## purchases テーブル
 
-| Column   | Type       | Options            |
-| -------- | ---------- | ------------------ |
-| item_id  | references | NOT NULL , 外部キー |
-| user_id  | references | NOT NULL , 外部キー |
+| Column   | Type       | Options                        |
+| -------- | ---------- | ------------------------------ |
+| items    | references | null: false, foreign_key: true |
+| users    | references | null: false, foreign_key: true |
+
+belongs_to :user
+belongs_to :item
+has_one :address
+
+
 
 ## addresses テーブル
 
-| Column           | Type       | Options              |
-| ---------------- | ---------- | ---------------------|
-| purchase_id      | references | NOT NULL ,外部キー    |
-| postal_code      | string     | NOT NULL             |
-| prefecture       | string     | NOT NULL             |
-| city             | string     | NOT NULL             |
-| street_address   | string     | NOT NULL             |
-| building_name    | string     |                      |
-| phone_number     | string     | NOT NULL             |
+| Column           | Type       | Options                         |
+| ---------------- | ---------- | --------------------------------|
+| purchases        | references | null: false, foreign_key: true  |
+| postal_code      | string     | null: false                     |
+| shipping_area_id | integer    | null: false                     |
+| city             | string     | null: false                     |
+| street_address   | string     | null: false                     |
+| building_name    | string     |                                 |
+| phone_number     | string     | null: false                     |
 
+belongs_to :purchase
 
 ## comments テーブル
 
-| Column   | Type       | Options            |
-| -------- | ---------- | ------------------ |
-| user_id  | references | NOT NULL , 外部キー |
-| item_id  | references | NOT NULL , 外部キー |
-| content  | text       | NOT NULL           |
+| Column   | Type       | Options                         |
+| -------- | ---------- | ------------------------------- |
+| users    | references | null: false, foreign_key: true  |
+| items    | references | null: false, foreign_key: true  |
+| content  | text       | null: false                     |
+
+belongs_to :user
+belongs_to :item
