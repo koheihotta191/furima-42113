@@ -39,7 +39,6 @@ Things you may want to cover:
 
 has_many :items
 has_many :purchases
-has_many :comments
 
 
 
@@ -54,20 +53,19 @@ has_many :comments
 | condition_id     | integer    | null: false                      |
 | shipping_fee_id  | integer    | null: false                      |
 | shipping_area_id | integer    | null: false                      |
-| shipping_days    | integer    | null: false                      |
+| shipping_day_id  | integer    | null: false                      |
 | price            | integer    | null: false                      |
 
 belongs_to :user
 has_one :purchase
-has_many :comments
 
 
 ## purchases テーブル
 
-| Column   | Type       | Options                        |
-| -------- | ---------- | ------------------------------ |
-| items    | references | null: false, foreign_key: true |
-| users    | references | null: false, foreign_key: true |
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| item    | references | null: false, foreign_key: true |
+| user    | references | null: false, foreign_key: true |
 
 belongs_to :user
 belongs_to :item
@@ -79,7 +77,7 @@ has_one :address
 
 | Column           | Type       | Options                         |
 | ---------------- | ---------- | --------------------------------|
-| purchases        | references | null: false, foreign_key: true  |
+| purchase         | references | null: false, foreign_key: true  |
 | postal_code      | string     | null: false                     |
 | shipping_area_id | integer    | null: false                     |
 | city             | string     | null: false                     |
@@ -88,14 +86,3 @@ has_one :address
 | phone_number     | string     | null: false                     |
 
 belongs_to :purchase
-
-## comments テーブル
-
-| Column   | Type       | Options                         |
-| -------- | ---------- | ------------------------------- |
-| users    | references | null: false, foreign_key: true  |
-| items    | references | null: false, foreign_key: true  |
-| content  | text       | null: false                     |
-
-belongs_to :user
-belongs_to :item
