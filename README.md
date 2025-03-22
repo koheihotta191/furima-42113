@@ -86,3 +86,4 @@ has_one :address
 | phone_number     | string     | null: false                     |
 
 belongs_to :purchase
+
