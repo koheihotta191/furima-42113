@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   validates :nickname, presence: true
   validates :birth_date, presence: true
-  validates :password, length: { minimum: 6 }, format: { with: /\A(?=.*[a-z])(?=.*\d)[a-z\d]+\z/, message: "は半角英数字を混ぜてください" }
+  validates :password, format: { with: /\A(?=.*[a-z])(?=.*\d)[a-z\d]+\z/, message: "は半角英数字を混ぜてください" }
   validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i, message: "は@を含む正しい形式で入力してください" }
 
 
