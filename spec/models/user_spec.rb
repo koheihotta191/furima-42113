@@ -8,7 +8,6 @@ RSpec.describe User, type: :model do
     it '全ての項目が正しく入力されている場合、登録できること' do
       expect(@user).to be_valid
     end
-  end
 
     it 'nicknameが空では登録できない' do
       @user.nickname = ''
