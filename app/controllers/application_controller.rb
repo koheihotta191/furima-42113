@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def message_params
+    permitted_attributes = [:user, :name, :description, :category_id, :condition_id, :shipping_fee_id, :shipping_area_id, :shipping_day_id, :price]
+    params.require(:item).permit(*permitted_attributes).merge(user_id: current_user.id)
+  end
+
 
 
   def configure_permitted_parameters
