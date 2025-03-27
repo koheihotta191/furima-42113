@@ -74,9 +74,9 @@ group :production do
   gem 'pg'
 end
 
-gem 'active_hash'
 
 gem 'devise'
 gem 'faker'
 gem 'faker-japanese'
 gem 'active_hash'
+gem 'pry-rails'
