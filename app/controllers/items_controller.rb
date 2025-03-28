@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :correct_user, only: [:edit, :update]
   before_action :set_item, only: [:edit, :show, :update]
+  before_action :correct_user, only: [:edit, :update]
   
 
   def new
@@ -48,7 +48,6 @@ class ItemsController < ApplicationController
 
 
   def correct_user
-    @item = Item.find(params[:id])
     return if current_user.id == @item.user.id
     redirect_to root_path
   end
