@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:edit, :show, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :redirect_if_not_allowed, only: [:edit, :update]
   
 
   def new
@@ -59,6 +60,13 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def redirect_if_not_allowed
+    # 現在のユーザーが商品を出品していない、または商品が売却済みであればトップページへリダイレクト
+    if current_user.id != @item.user.id || @item.purchase.present?
+      redirect_to root_path
+    end
   end
 
 
