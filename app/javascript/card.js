@@ -29,5 +29,5 @@ const pay = () => {
   });
 };
 
-window.addEventListener("load", pay);
-window.addEventListener("turbo:render", pay);
+document.addEventListener("turbo:load", pay);
+document.addEventListener("turbo:render", pay);

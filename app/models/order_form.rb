@@ -11,7 +11,7 @@ class OrderForm
     validates :shipping_area_id, numericality: { other_than: 1, message: "can't be blank" }
     validates :city
     validates :street_address
-    validates :token, presence: true
+    validates :token
 
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid' }
   end

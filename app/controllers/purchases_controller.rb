@@ -1,24 +1,21 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
   before_action :redirect_if_not_allowed
 
   def index
-    
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(item_id: @item.id)
   end
 
 
   def create
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_params)
     if @order_form.valid?
       pay_item
       @order_form.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       render 'index', status: :unprocessable_entity
     end
@@ -26,6 +23,10 @@ class PurchasesController < ApplicationController
 
 
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
 
   def order_params
